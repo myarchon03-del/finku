@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Finku – Prototipe Aplikasi</title>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#e9eef4;--card:#fff;--ink:#14213d;--mute:#5f6b7f;--line:#dde4ec;--brand:#14213d;--ok:#0e9f6e;--okbg:#def5ec;--warn:#b37a00;--warnbg:#fff1cc;--bad:#c93a3a;--badbg:#fde4e4;--wa:#dcf8c6;
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0b1220;--card:#162033;--ink:#e8eef8;--mute:#9aa7bd;--line:#26334a;--brand:#0e9f6e;--okbg:#0f3a2e;--warnbg:#3b2f0a;--warn:#f5c542;--badbg:#3d1a1a;--wa:#1f4d36}}
+:root[data-theme="dark"]{--bg:#0b1220;--card:#162033;--ink:#e8eef8;--mute:#9aa7bd;--line:#26334a;--brand:#0e9f6e;--okbg:#0f3a2e;--warnbg:#3b2f0a;--warn:#f5c542;--badbg:#3d1a1a;--wa:#1f4d36}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:'Plus Jakarta Sans',system-ui,-apple-system,'Segoe UI',sans-serif;font-size:14px}
+.stage{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:16px}
+.phone{width:100%;max-width:400px;height:min(780px,calc(100vh - 32px));background:var(--bg);border-radius:28px;border:1px solid var(--line);box-shadow:0 12px 40px rgba(20,33,61,.18);display:flex;flex-direction:column;overflow:hidden;position:relative}
+@media (max-width:440px){.stage{padding:0}.phone{height:100vh;max-width:none;border-radius:0;border:0}}
+header{background:var(--brand);color:#fff;padding:14px 16px;display:flex;align-items:center;gap:10px}
+header b{font-size:18px;font-weight:800;letter-spacing:.2px}
+header .sp{flex:1}
+.chip{background:rgba(255,255,255,.16);color:#fff;border:0;border-radius:99px;padding:6px 12px;font:inherit;font-size:12px;cursor:pointer}
+main{flex:1;overflow-y:auto;padding:14px 16px 20px}
+nav{display:flex;background:var(--card);border-top:1px solid var(--line)}
+nav button{flex:1;background:none;border:0;padding:10px 4px 12px;font:inherit;font-size:12px;color:var(--mute);cursor:pointer}
+nav button.on{color:var(--ok);font-weight:800}
+nav button span{display:block;font-size:18px}
+h2{font-size:16px;margin:0 0 10px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:12px;margin-bottom:10px}
+.seg{display:flex;background:var(--line);border-radius:10px;padding:3px;margin-bottom:12px}
+.seg button{flex:1;border:0;background:none;border-radius:8px;padding:8px;font:inherit;font-weight:600;color:var(--mute);cursor:pointer}
+.seg button.on{background:var(--card);color:var(--ink)}
+.row{display:flex;align-items:center;gap:10px}
+.row .grow{flex:1;min-width:0}
+.mute{color:var(--mute);font-size:12px}
+.qty{display:flex;align-items:center;gap:8px}
+.qty button{width:30px;height:30px;border-radius:8px;border:1px solid var(--line);background:var(--card);color:var(--ink);font-size:16px;cursor:pointer}
+.pays{display:flex;gap:8px;margin:8px 0}
+.pays button{flex:1;padding:9px;border-radius:10px;border:1.5px solid var(--line);background:var(--card);color:var(--ink);font:inherit;font-weight:600;cursor:pointer}
+.pays button.on{border-color:var(--ok);background:var(--okbg)}
+.btn{width:100%;padding:13px;border:0;border-radius:12px;background:var(--ok);color:#fff;font:inherit;font-weight:800;font-size:15px;cursor:pointer}
+.btn.ghost{background:var(--card);color:var(--ink);border:1px solid var(--line)}
+.btn.bad{background:var(--bad)}
+.btn:disabled{opacity:.45;cursor:not-allowed}
+input{width:100%;padding:11px;border-radius:10px;border:1px solid var(--line);background:var(--card);color:var(--ink);font:inherit;margin-bottom:8px}
+.tag{display:inline-block;border-radius:99px;padding:2px 8px;font-size:11px;font-weight:600}
+.tag.in{background:var(--okbg);color:var(--ok)}.tag.out{background:var(--warnbg);color:var(--warn)}.tag.void{background:var(--badbg);color:var(--bad)}
+.amt{font-weight:800;white-space:nowrap}
+.void .amt,.void .d{text-decoration:line-through;opacity:.55}
+.big{font-size:26px;font-weight:800}
+.grid3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-bottom:10px}
+.grid3 .card{margin:0;padding:10px}
+.wa{background:var(--wa);border-radius:4px 14px 14px 14px;padding:12px;white-space:pre-line;font-size:13px;line-height:1.5;margin-bottom:10px}
+.login{padding-top:24px;text-align:center}
+.login .lock{font-size:44px}
+.login h1{margin:6px 0 2px;font-size:28px}
+.role{display:block;width:100%;text-align:left;margin-bottom:10px;cursor:pointer;font:inherit;color:var(--ink)}
+.sheet{position:absolute;inset:0;background:rgba(10,15,30,.55);display:flex;align-items:flex-end;z-index:5}
+.sheet>div{background:var(--card);width:100%;border-radius:20px 20px 0 0;padding:18px 16px 22px}
+.toast{position:absolute;left:16px;right:16px;bottom:78px;background:var(--ink);color:var(--bg);padding:11px 14px;border-radius:12px;font-size:13px;z-index:9}
+.bar{position:sticky;bottom:-20px;background:var(--bg);padding:8px 0}
+</style>
+</head>
+<body>
+<div class="stage"><div class="phone" id="app"></div></div>
+<script>
+const MENU=[['Seblak Bakso',10000],['Seblak Ceker',12000],['Es Teh',4000],['Es Jeruk',5000],['Kerupuk',2000],['Telur',3000]];
+const rp=n=>'Rp'+Math.abs(n).toLocaleString('id-ID');
+const hm=()=>new Date().toLocaleTimeString('id-ID',{hour:'2-digit',minute:'2-digit'}).replace('.',':');
+let S={user:null,tab:'kasir',mode:'jual',pay:'Tunai',cart:{},sel:null,toast:'',nid:4,
+tx:[{id:1,t:'09:12',type:'in',d:'2 Seblak Bakso, 1 Es Teh',amt:24000,pay:'Tunai',by:'Sari'},
+{id:2,t:'10:05',type:'in',d:'1 Seblak Ceker',amt:12000,pay:'QRIS',by:'Sari'},
+{id:3,t:'10:40',type:'out',d:'Beli kerupuk & bumbu',amt:35000,pay:'Tunai',by:'Sari'}],
+log:[{t:'08:00',who:'Bu Cinta',a:'Masuk sebagai Pemilik'}]};
+const owner=()=>S.user==='Pemilik';
+const who=()=>owner()?'Bu Cinta':'Sari';
+const addLog=a=>S.log.unshift({t:hm(),who:who(),a});
+const flash=m=>{S.toast=m;draw();setTimeout(()=>{S.toast='';draw()},2200)};
+const live=()=>S.tx.filter(x=>!x.void);
+const sum=(t,p)=>live().filter(x=>x.type===t&&(!p||x.pay===p)).reduce((a,x)=>a+x.amt,0);
+const cartTotal=()=>MENU.reduce((a,m,i)=>a+(S.cart[i]||0)*m[1],0);
+
+function login(r){S.user=r;S.tab='kasir';S.log.unshift({t:hm(),who:who(),a:'Masuk sebagai '+r});draw()}
+function out(){S.user=null;draw()}
+function go(t){S.tab=t;draw()}
+function setMode(m){S.mode=m;draw()}
+function setPay(p){S.pay=p;draw()}
+function chg(i,d){S.cart[i]=Math.max(0,(S.cart[i]||0)+d);draw()}
+function saveSale(){
+ const items=MENU.map((m,i)=>S.cart[i]?S.cart[i]+' '+m[0]:null).filter(Boolean);
+ if(!items.length)return;
+ const amt=cartTotal();
+ S.tx.unshift({id:S.nid++,t:hm(),type:'in',d:items.join(', '),amt,pay:S.pay,by:who()});
+ addLog('Menambah penjualan '+rp(amt)+' ('+S.pay+')');
+ S.cart={};flash('Penjualan tersimpan dan terkunci');
+}
+function saveExp(){
+ const a=parseInt(document.getElementById('ea').value),n=document.getElementById('en').value.trim();
+ if(!a||a<=0||!n){flash('Isi nominal dan keterangan dulu');return}
+ S.tx.unshift({id:S.nid++,t:hm(),type:'out',d:n,amt:a,pay:S.pay,by:who()});
+ addLog('Menambah pengeluaran '+rp(a)+' ('+n+')');
+ flash('Pengeluaran tersimpan dan terkunci');
+}
+function open_(id){
+ if(!owner()){flash('Terkunci: hanya pemilik yang bisa mengubah atau membatalkan');return}
+ const x=S.tx.find(t=>t.id===id);if(x.void)return;S.sel=id;draw();
+}
+function voidTx(){
+ const r=document.getElementById('vr').value.trim();
+ if(!r){flash('Tulis alasan pembatalan');return}
+ const x=S.tx.find(t=>t.id===S.sel);x.void=r;
+ addLog('Membatalkan transaksi #'+x.id+' ('+rp(x.amt)+') – '+r);
+ S.sel=null;flash('Dibatalkan. Catatan asli tetap tersimpan');
+}
+function sendWA(){addLog('Mengirim laporan harian ke WhatsApp');flash('Laporan terkirim ke WhatsApp (simulasi)')}
+
+function viewKasir(){
+ let h=`<div class="seg"><button class="${S.mode=='jual'?'on':''}" onclick="setMode('jual')">Penjualan</button><button class="${S.mode=='keluar'?'on':''}" onclick="setMode('keluar')">Pengeluaran</button></div>`;
+ const pays=['Tunai','Transfer','QRIS'].map(p=>`<button class="${S.pay==p?'on':''}" onclick="setPay('${p}')">${p}</button>`).join('');
+ if(S.mode=='jual'){
+  h+=MENU.map((m,i)=>`<div class="card row"><div class="grow"><b>${m[0]}</b><div class="mute">${rp(m[1])}</div></div><div class="qty"><button onclick="chg(${i},-1)" aria-label="Kurangi">−</button><b>${S.cart[i]||0}</b><button onclick="chg(${i},1)" aria-label="Tambah">+</button></div></div>`).join('');
+  const t=cartTotal();
+  h+=`<div class="bar"><div class="mute">Cara bayar</div><div class="pays">${pays}</div><button class="btn" ${t?'':'disabled'} onclick="saveSale()">Simpan penjualan ${t?rp(t):''}</button></div>`;
+ }else{
+  h+=`<div class="card"><input id="ea" type="number" inputmode="numeric" placeholder="Nominal (Rp)"><input id="en" placeholder="Untuk apa? Contoh: beli telur"><div class="mute">Dibayar dengan</div><div class="pays">${pays}</div><button class="btn" onclick="saveExp()">Simpan pengeluaran</button></div>`;
+ }
+ return h;
+}
+function viewRiwayat(){
+ let h=`<h2>Riwayat hari ini</h2>`+(owner()?'':`<div class="card mute">🔒 Catatan yang sudah disimpan tidak bisa diubah dari akun karyawan.</div>`);
+ h+=S.tx.map(x=>`<div class="card row ${x.void?'void':''}" onclick="open_(${x.id})" style="cursor:pointer"><div class="grow"><div class="d"><b>${x.d}</b></div><div class="mute">${x.t} · ${x.by} · ${x.pay} · 🔒 #${x.id}</div>${x.void?`<span class="tag void">Dibatalkan: ${x.void}</span>`:''}</div><div style="text-align:right"><div class="amt">${x.type=='in'?'+':'−'}${rp(x.amt)}</div>${x.void?'':`<span class="tag ${x.type}">${x.type=='in'?'Masuk':'Keluar'}</span>`}</div></div>`).join('');
+ return h;
+}
+function viewLaporan(){
+ const i=sum('in'),o=sum('out'),l=i-o;
+ const m=['Tunai','Transfer','QRIS'].map(p=>[p,sum('in',p)]);
+ const msg=`📊 Laporan Harian FINKU\nSeblak Teh Cinta\n\nPemasukan: ${rp(i)}\nPengeluaran: ${rp(o)}\nKeuntungan: ${l<0?'−':''}${rp(l)}\n\nTunai: ${rp(m[0][1])}\nTransfer: ${rp(m[1][1])}\nQRIS: ${rp(m[2][1])}`;
+ return `<h2>Laporan hari ini</h2><div class="card"><div class="mute">Keuntungan hari ini</div><div class="big" style="color:${l<0?'var(--bad)':'var(--ok)'}">${l<0?'−':''}${rp(l)}</div></div>
+ <div class="grid3"><div class="card"><div class="mute">Masuk</div><b>${rp(i)}</b></div><div class="card"><div class="mute">Keluar</div><b>${rp(o)}</b></div><div class="card"><div class="mute">Transaksi</div><b>${live().length}</b></div></div>
+ <div class="card"><b>Uang yang seharusnya ada</b>${m.map(x=>`<div class="row" style="margin-top:6px"><div class="grow">${x[0]}</div><b>${rp(x[1])}</b></div>`).join('')}</div>
+ <div class="mute" style="margin:12px 0 6px">Pesan yang masuk ke WhatsApp pemilik</div><div class="wa">${msg}</div><button class="btn" onclick="sendWA()">Kirim sekarang</button>`;
+}
+function viewAktivitas(){
+ return `<h2>Riwayat aktivitas</h2><div class="mute" style="margin-bottom:10px">Semua tindakan tercatat: siapa, kapan, apa.</div>`+S.log.map(x=>`<div class="card"><b>${x.a}</b><div class="mute">${x.t} · ${x.who}</div></div>`).join('');
+}
+function draw(){
+ const A=document.getElementById('app');
+ if(!S.user){
+  A.innerHTML=`<main class="login"><div class="lock">🔐</div><h1>FINKU</h1><div class="mute" style="margin-bottom:22px">Keuanganmu, Milikmu, Kamu yang Tahu</div>
+  <div class="mute" style="margin-bottom:10px">Pilih akun untuk mencoba prototipe</div>
+  <button class="card role" onclick="login('Pemilik')"><b>Pemilik · Bu Cinta</b><div class="mute">Lihat laporan, batalkan transaksi, cek aktivitas</div></button>
+  <button class="card role" onclick="login('Karyawan')"><b>Karyawan · Sari</b><div class="mute">Hanya bisa menambah transaksi baru</div></button></main>`;return;
+ }
+ const tabs=[['kasir','🧾','Kasir'],['riwayat','📒','Riwayat']];
+ if(owner())tabs.push(['laporan','📊','Laporan'],['aktivitas','🕵️','Aktivitas']);
+ const v={kasir:viewKasir,riwayat:viewRiwayat,laporan:viewLaporan,aktivitas:viewAktivitas}[S.tab]();
+ const keep=A.querySelector('main')?A.querySelector('main').scrollTop:0;
+ A.innerHTML=`<header><b>🔒 FINKU</b><span class="sp"></span><span class="chip">${S.user}</span><button class="chip" onclick="out()">Ganti akun</button></header><main>${v}</main>
+ <nav>${tabs.map(t=>`<button class="${S.tab==t[0]?'on':''}" onclick="go('${t[0]}')"><span>${t[1]}</span>${t[2]}</button>`).join('')}</nav>
+ ${S.sel?`<div class="sheet"><div><h2>Batalkan transaksi #${S.sel}?</h2><div class="mute" style="margin-bottom:10px">Catatan asli tidak dihapus. Hanya diberi tanda batal dan alasannya.</div><input id="vr" placeholder="Alasan pembatalan"><button class="btn bad" onclick="voidTx()">Batalkan transaksi</button><div style="height:8px"></div><button class="btn ghost" onclick="S.sel=null;draw()">Kembali</button></div></div>`:''}
+ ${S.toast?`<div class="toast">${S.toast}</div>`:''}`;
+ const m=A.querySelector('main');if(m)m.scrollTop=keep;
+}
+draw();
+</script>
+</body>
+</html>
